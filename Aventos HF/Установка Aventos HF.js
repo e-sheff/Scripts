@@ -3,14 +3,14 @@ Right = 0;
 Top = 0;
 Bottom = 0;
 
-// если это не режим редактирования, то указываем границы
+// ГҐГ±Г«ГЁ ГЅГІГ® Г­ГҐ Г°ГҐГ¦ГЁГ¬ Г°ГҐГ¤Г ГЄГІГЁГ°Г®ГўГ Г­ГЁГї, ГІГ® ГіГЄГ Г§Г»ГўГ ГҐГ¬ ГЈГ°Г Г­ГЁГ¶Г»
 if (!ParametricBlock)
 {
     SetCamera(p3dFront);
-    Left = GetEdge('Укажите первую вертикальную границу', AxisY).GFirst.x;
-    Right = GetEdge('Укажите вторую вертикальную границу', AxisY).GFirst.x;
-    Top = GetEdge('Укажите первую горизонтальную границу', AxisX).GFirst.y;
-    Bottom = GetEdge('Укажите вторую горизонтальную границу', AxisX).GFirst.y;
+    Left = GetEdge('Г“ГЄГ Г¦ГЁГІГҐ ГЇГҐГ°ГўГіГѕ ГўГҐГ°ГІГЁГЄГ Г«ГјГ­ГіГѕ ГЈГ°Г Г­ГЁГ¶Гі', AxisY).GFirst.x;
+    Right = GetEdge('Г“ГЄГ Г¦ГЁГІГҐ ГўГІГ®Г°ГіГѕ ГўГҐГ°ГІГЁГЄГ Г«ГјГ­ГіГѕ ГЈГ°Г Г­ГЁГ¶Гі', AxisY).GFirst.x;
+    Top = GetEdge('Г“ГЄГ Г¦ГЁГІГҐ ГЇГҐГ°ГўГіГѕ ГЈГ®Г°ГЁГ§Г®Г­ГІГ Г«ГјГ­ГіГѕ ГЈГ°Г Г­ГЁГ¶Гі', AxisX).GFirst.y;
+    Bottom = GetEdge('Г“ГЄГ Г¦ГЁГІГҐ ГўГІГ®Г°ГіГѕ ГЈГ®Г°ГЁГ§Г®Г­ГІГ Г«ГјГ­ГіГѕ ГЈГ°Г Г­ГЁГ¶Гі', AxisX).GFirst.y;
 
     if (Left > Right) {
         aaa = Left
@@ -36,66 +36,66 @@ if (!ParametricBlock) {
     DepthVal.Value = 298;
 }
 
-BtnOK = NewButtonInput("Построить")
+BtnOK = NewButtonInput("ГЏГ®Г±ГІГ°Г®ГЁГІГј")
 BtnOK.OnChange = function() {Action.Finish()};
 
 function MakeProp() {
     Prop = Action.Properties;
 
-    //группа корпус
-    Korp = Prop.NewGroup('Корпус');
-    SzLeft = Korp.NewNumber('Лево', Left);
+    //ГЈГ°ГіГЇГЇГ  ГЄГ®Г°ГЇГіГ±
+    Korp = Prop.NewGroup('ГЉГ®Г°ГЇГіГ±');
+    SzLeft = Korp.NewNumber('Г‹ГҐГўГ®', Left);
     SzLeft.Visible = false;
-    SzBottom = Korp.NewNumber('Низ', Bottom);
+    SzBottom = Korp.NewNumber('ГЌГЁГ§', Bottom);
     SzBottom.Visible = false;
-    SzWidth = Korp.NewNumber('Ширина', Right - Left);
-    SzHeight = Korp.NewNumber('Высота', Top - Bottom);
-    DepthVal = Korp.NewNumber('Глубина');
+    SzWidth = Korp.NewNumber('ГГЁГ°ГЁГ­Г ', Right - Left);
+    SzHeight = Korp.NewNumber('Г‚Г»Г±Г®ГІГ ', Top - Bottom);
+    DepthVal = Korp.NewNumber('ГѓГ«ГіГЎГЁГ­Г ');
     DepthVal.Value = 298;
-    SideMat = Korp.NewMaterial('ДСП корпуса');
-    ButtC = Korp.NewButt('Кромка корпуса');
+    SideMat = Korp.NewMaterial('Г„Г‘ГЏ ГЄГ®Г°ГЇГіГ±Г ');
+    ButtC = Korp.NewButt('ГЉГ°Г®Г¬ГЄГ  ГЄГ®Г°ГЇГіГ±Г ');
 
-    //группа вставная полка
-    PolkaVs = Prop.NewBool('Вставная полка');
+    //ГЈГ°ГіГЇГЇГ  ГўГ±ГІГ ГўГ­Г Гї ГЇГ®Г«ГЄГ 
+    PolkaVs = Prop.NewBool('Г‚Г±ГІГ ГўГ­Г Гї ГЇГ®Г«ГЄГ ');
     PolkaVs.Value = true;
     PolkaVs.OnChange = function() {PolkaVs.ChildrenEnabled = PolkaVs.Value};
-    CountPol = PolkaVs.NewNumber('Количество');
+    CountPol = PolkaVs.NewNumber('ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ®');
     CountPol.Value = 1;
-    ShelfOffset = PolkaVs.NewNumber('Отступ с боков');
+    ShelfOffset = PolkaVs.NewNumber('ГЋГІГ±ГІГіГЇ Г± ГЎГ®ГЄГ®Гў');
     ShelfOffset.Value = 1.5;
-    ShelfZag = PolkaVs.NewNumber('Заглубление');
+    ShelfZag = PolkaVs.NewNumber('Г‡Г ГЈГ«ГіГЎГ«ГҐГ­ГЁГҐ');
     ShelfZag.Value = 22;
 
-    //группа фасад
-    Doors = Prop.NewCombo('Фасады', 'Панель - Панель\nПанель - Рамка\nРамка - Панель\nРамка - Рамка');
-    //VesFas = Doors.NewNumber('Вес фасадов');
+    //ГЈГ°ГіГЇГЇГ  ГґГ Г±Г Г¤
+    Doors = Prop.NewCombo('Г”Г Г±Г Г¤Г»', 'ГЏГ Г­ГҐГ«Гј - ГЏГ Г­ГҐГ«Гј\nГЏГ Г­ГҐГ«Гј - ГђГ Г¬ГЄГ \nГђГ Г¬ГЄГ  - ГЏГ Г­ГҐГ«Гј\nГђГ Г¬ГЄГ  - ГђГ Г¬ГЄГ ');
+    //VesFas = Doors.NewNumber('Г‚ГҐГ± ГґГ Г±Г Г¤Г®Гў');
     //VesFas.Enabled = false;
     //VesFas.Value = SumFas;
-    MatFas = Doors.NewMaterial('Материал');
-    ButtD = Doors.NewButt('Кромка');
-    KolDv = Doors.NewCombo('Кол-во дверей',  '1\n2');
-    PetliLeftRight = Doors.NewCombo('Петли', 'Слева\nСправа');
+    MatFas = Doors.NewMaterial('ГЊГ ГІГҐГ°ГЁГ Г«');
+    ButtD = Doors.NewButt('ГЉГ°Г®Г¬ГЄГ ');
+    KolDv = Doors.NewCombo('ГЉГ®Г«-ГўГ® Г¤ГўГҐГ°ГҐГ©',  '1\n2');
+    PetliLeftRight = Doors.NewCombo('ГЏГҐГІГ«ГЁ', 'Г‘Г«ГҐГўГ \nГ‘ГЇГ°Г ГўГ ');
 
-    //группа столешница
-    Stolesh = Prop.NewBool('Столешница');
+    //ГЈГ°ГіГЇГЇГ  Г±ГІГ®Г«ГҐГёГ­ГЁГ¶Г 
+    Stolesh = Prop.NewBool('Г‘ГІГ®Г«ГҐГёГ­ГЁГ¶Г ');
     Stolesh.Value = true;
     Stolesh.OnChange = function() {Stolesh.ChildrenEnabled = Stolesh.Value};
-    MatStol = Stolesh.NewMaterial('Материал');
+    MatStol = Stolesh.NewMaterial('ГЊГ ГІГҐГ°ГЁГ Г«');
 
-    // группа фурнитура
-    FurnGroup = Prop.NewGroup('Фурнитура');
-    Ruch = FurnGroup.NewFurniture('Ручка');
-    Angle = FurnGroup.NewCombo('Угол поворота ручки',  '0\n90')
-    Опора = FurnGroup.NewFurniture('Опора');
-    Pet = FurnGroup.NewFurniture('Петля');
-    НавескаЛевая = FurnGroup.NewFurniture('Навеска Левая');
-    НавескаПравая = FurnGroup.NewFurniture('Навеска Правая');
-    Евровинт = FurnGroup.NewFurniture('Евровинт');
-    Полкодержатель = FurnGroup.NewFurniture('Полкодержатель');
-    Шкант = FurnGroup.NewFurniture('Шкант');
+    // ГЈГ°ГіГЇГЇГ  ГґГіГ°Г­ГЁГІГіГ°Г 
+    FurnGroup = Prop.NewGroup('Г”ГіГ°Г­ГЁГІГіГ°Г ');
+    Ruch = FurnGroup.NewFurniture('ГђГіГ·ГЄГ ');
+    Angle = FurnGroup.NewCombo('Г“ГЈГ®Г« ГЇГ®ГўГ®Г°Г®ГІГ  Г°ГіГ·ГЄГЁ',  '0\n90')
+    ГЋГЇГ®Г°Г  = FurnGroup.NewFurniture('ГЋГЇГ®Г°Г ');
+    Pet = FurnGroup.NewFurniture('ГЏГҐГІГ«Гї');
+    ГЌГ ГўГҐГ±ГЄГ Г‹ГҐГўГ Гї = FurnGroup.NewFurniture('ГЌГ ГўГҐГ±ГЄГ  Г‹ГҐГўГ Гї');
+    ГЌГ ГўГҐГ±ГЄГ ГЏГ°Г ГўГ Гї = FurnGroup.NewFurniture('ГЌГ ГўГҐГ±ГЄГ  ГЏГ°Г ГўГ Гї');
+    Г…ГўГ°Г®ГўГЁГ­ГІ = FurnGroup.NewFurniture('Г…ГўГ°Г®ГўГЁГ­ГІ');
+    ГЏГ®Г«ГЄГ®Г¤ГҐГ°Г¦Г ГІГҐГ«Гј = FurnGroup.NewFurniture('ГЏГ®Г«ГЄГ®Г¤ГҐГ°Г¦Г ГІГҐГ«Гј');
+    ГГЄГ Г­ГІ = FurnGroup.NewFurniture('ГГЄГ Г­ГІ');
 
-    //обработка нажатия кнокпи
-    Btn = Prop.NewButton('Построить');
+    //Г®ГЎГ°Г ГЎГ®ГІГЄГ  Г­Г Г¦Г ГІГЁГї ГЄГ­Г®ГЄГЇГЁ
+    Btn = Prop.NewButton('ГЏГ®Г±ГІГ°Г®ГЁГІГј');
     Btn.OnClick = function() {
     Action.Finish()};
 }
@@ -126,13 +126,13 @@ function Primenit()
 
     if (SzHeight.Value > 820)
     {
-        НавескаЛевая.Enabled = true;
-        НавескаПравая.Enabled = true;
-        Опора.Enabled = false;
+        ГЌГ ГўГҐГ±ГЄГ Г‹ГҐГўГ Гї.Enabled = true;
+        ГЌГ ГўГҐГ±ГЄГ ГЏГ°Г ГўГ Гї.Enabled = true;
+        ГЋГЇГ®Г°Г .Enabled = false;
     } else {
-        НавескаЛевая.Enabled = false;
-        НавескаПравая.Enabled = false;
-        Опора.Enabled = true;
+        ГЌГ ГўГҐГ±ГЄГ Г‹ГҐГўГ Гї.Enabled = false;
+        ГЌГ ГўГҐГ±ГЄГ ГЏГ°Г ГўГ Гї.Enabled = false;
+        ГЋГЇГ®Г°Г .Enabled = true;
     }
 
     if (Angle.ItemIndex == 0)
@@ -141,13 +141,13 @@ function Primenit()
         Fi = 90;
 
     if (DepthVal.Value <= 199)
-        alert('Глубина копуса менее 200 мм!\nВедите значение заново.')
+        alert('ГѓГ«ГіГЎГЁГ­Г  ГЄГ®ГЇГіГ±Г  Г¬ГҐГ­ГҐГҐ 200 Г¬Г¬!\nГ‚ГҐГ¤ГЁГІГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ Г§Г Г­Г®ГўГ®.')
     else
         MakeShelf();
 }
 
 
-Action.OnStart = function ()//обработка событий в любых полях ввода свойства
+Action.OnStart = function ()//Г®ГЎГ°Г ГЎГ®ГІГЄГ  Г±Г®ГЎГ»ГІГЁГ© Гў Г«ГѕГЎГ»Гµ ГЇГ®Г«ГїГµ ГўГўГ®Г¤Г  Г±ГўГ®Г©Г±ГІГўГ 
 {
     Prop.OnChange = Primenit;
     Primenit();
@@ -157,8 +157,8 @@ Action.OnStart = function ()//обработка событий в любых полях ввода свойства
 Action.Continue();
 
 function EvrAndShkant(Panel1, Panel2, X, Y, Z, Sdvig) {
-    Евровинт.Value.Mount(Panel1, Panel2, X, Y, Z);
-    Шкант.Value.Mount(Panel1, Panel2, X, Y, Z + Sdvig);
+    Г…ГўГ°Г®ГўГЁГ­ГІ.Value.Mount(Panel1, Panel2, X, Y, Z);
+    ГГЄГ Г­ГІ.Value.Mount(Panel1, Panel2, X, Y, Z + Sdvig);
 }
 
 function Petlya(Panel1, Panel2, X, Y, Z) {
@@ -174,63 +174,63 @@ function Ruchka(Panel, X, Y, Z, S){
     Ruch.Value.Mount1(Panel, X, Y, Z, S)
 }
 
-function Dver1() //установка оной двери с петлями и ручкой
+function Dver1() //ГіГ±ГІГ Г­Г®ГўГЄГ  Г®Г­Г®Г© Г¤ГўГҐГ°ГЁ Г± ГЇГҐГІГ«ГїГ¬ГЁ ГЁ Г°ГіГ·ГЄГ®Г©
 {
     MatFas.SetActive();
     DverUP = AddFrontPanel(Left + Fuga, CenrtY + Fuga, Right - Fuga, Top - Fuga, Depth);
-    DverUP.TextureOrientation = ftoVertical; //направление текстуры
+    DverUP.TextureOrientation = ftoVertical; //Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ ГІГҐГЄГ±ГІГіГ°Г»
     DverUP.AddButt(ButtD, 0);
     DverUP.AddButt(ButtD, 1);
     DverUP.AddButt(ButtD, 2);
     DverUP.AddButt(ButtD, 3);
-    DverUP.Name = 'Дверь верхняя';
+    DverUP.Name = 'Г„ГўГҐГ°Гј ГўГҐГ°ГµГ­ГїГї';
     DverX = DverUP.GSize.x / 1000;
     DverY = DverUP.GSize.y / 1000;
     DverZ = MatFas.Thickness / 1000;
     DverPlot = 700;
     DV = DverX * DverY * DverZ * DverPlot;
-    DverVes = + DV.toPrecision(3);//вес двери
+    DverVes = + DV.toPrecision(3);//ГўГҐГ± Г¤ГўГҐГ°ГЁ
     Petli();
 }
 
-function Dver2() //установка двух дверей с петлями и ручками
+function Dver2() //ГіГ±ГІГ Г­Г®ГўГЄГ  Г¤ГўГіГµ Г¤ГўГҐГ°ГҐГ© Г± ГЇГҐГІГ«ГїГ¬ГЁ ГЁ Г°ГіГ·ГЄГ Г¬ГЁ
 {
     MatFas.SetActive()
     DverDN = AddFrontPanel(Left + Fuga, Bottom + Fuga, Right - Fuga, CenrtY - Fuga, Depth);
-    DverDN.TextureOrientation = ftoVertical; //направление текстуры
+    DverDN.TextureOrientation = ftoVertical; //Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ ГІГҐГЄГ±ГІГіГ°Г»
     DverDN.AddButt(ButtD, 0);
     DverDN.AddButt(ButtD, 1);
     DverDN.AddButt(ButtD, 2);
     DverDN.AddButt(ButtD, 3);
-    DverDN.Name = 'Дверь нижняя';
+    DverDN.Name = 'Г„ГўГҐГ°Гј Г­ГЁГ¦Г­ГїГї';
     Ruchka(DverDN, CentrX, Bottom + Fuga + 50, DepthDver, 0);
 }
 
 function Dver3()
 {
-    //BeginBlock("Фасад рамочный");
+    //BeginBlock("Г”Г Г±Г Г¤ Г°Г Г¬Г®Г·Г­Г»Г©");
     ProfGor = AddExtrusion();
-    ProfGor.MaterialName = 'Профиль рамочный узкий';
+    ProfGor.MaterialName = 'ГЏГ°Г®ГґГЁГ«Гј Г°Г Г¬Г®Г·Г­Г»Г© ГіГ§ГЄГЁГ©';
     ProfGor.MaterialWidth = 19;
-    File = 'Узкий профиль.frw';
+    File = 'Г“Г§ГЄГЁГ© ГЇГ°Г®ГґГЁГ«Гј.frw';
     //ProfGor.Contour.Load(File);
     ProfGor.Thickness = SH - Fuga * 2;
     ProfGor.Orient(AxisX, AxisY)
     ProfGor.Position = NewVector(Left + Fuga, Bottom + Fuga, Depth);
-    ProfGor.Name = 'Профиль горизонтальный';
+    ProfGor.Name = 'ГЏГ°Г®ГґГЁГ«Гј ГЈГ®Г°ГЁГ§Г®Г­ГІГ Г«ГјГ­Г»Г©';
     ProfGor.Clip(NewVector(0, 0, 0), NewVector(0, -1, 1));
     ProfGor.Clip(NewVector(0, 0, ProfGor.Thickness), NewVector(0, -1, -1));
     ProfGor.Build();
     ProfGor2 = AddSymmetry(ProfGor, NewVector(0, (Top - Bottom) * 0.25 + Bottom, 0),  AxisY);
     ProfGor2.Build();
     ProfVer = AddExtrusion();
-    ProfVer.MaterialName = 'Профиль рамочный узкий';
+    ProfVer.MaterialName = 'ГЏГ°Г®ГґГЁГ«Гј Г°Г Г¬Г®Г·Г­Г»Г© ГіГ§ГЄГЁГ©';
     ProfVer.MaterialWidth = 19;
     //ProfVer.Contour.Load(File);
     ProfVer.Orient(AxisY, Axis_X)
     ProfVer.Thickness = ((Top - Bottom) * 0.5 - (Fuga * 2));
     ProfVer.Position = NewVector(Right - Fuga, Fuga + Bottom, Depth);
-    ProfVer.Name = 'Прфиль вертикальный';
+    ProfVer.Name = 'ГЏГ°ГґГЁГ«Гј ГўГҐГ°ГІГЁГЄГ Г«ГјГ­Г»Г©';
     ProfVer.Clip(NewVector(0, 0, 0), NewVector(0, -1, 1));
     ProfVer.Clip(NewVector(0, 0, ProfVer.Thickness), NewVector(0, -1, -1));
     ProfVer.Build();
@@ -238,8 +238,8 @@ function Dver3()
     ProfVer2.Build();
     FrontPan = AddFrontPanel(Left + Fuga + 12, Bottom + Fuga + 12, Right - Fuga - 12, (CenrtY - Fuga) - 12, Depth + 14)
     FrontPan.Thickness = 4;
-    FrontPan.MaterialName = 'Стекло 4 мм';
-    FrontPan.Name = 'Стекло для рамки';
+    FrontPan.MaterialName = 'Г‘ГІГҐГЄГ«Г® 4 Г¬Г¬';
+    FrontPan.Name = 'Г‘ГІГҐГЄГ«Г® Г¤Г«Гї Г°Г Г¬ГЄГЁ';
     FrontPan.TextureOrientation = TextureOrientation.Horizontal;
     FrontPan.Build();
     XS = FrontPan.GSize.x;
@@ -251,7 +251,7 @@ function Dver3()
     LVer = ProfVer.Thickness * 2;
     VesR = (LGor + LVer) / 1000 * 0.3;
     VR = +VesR.toPrecision(3);
-    VesFasRam = VST + VR;//вес фасада (рамка + вставка)
+    VesFasRam = VST + VR;//ГўГҐГ± ГґГ Г±Г Г¤Г  (Г°Г Г¬ГЄГ  + ГўГ±ГІГ ГўГЄГ )
 }
 
 
@@ -259,19 +259,19 @@ function MakeShelf()
 {
     DeleteNewObjects();
 
-    // границы теперь возьмем из параметров (т.к. они сохраняютя)
+    // ГЈГ°Г Г­ГЁГ¶Г» ГІГҐГЇГҐГ°Гј ГўГ®Г§ГјГ¬ГҐГ¬ ГЁГ§ ГЇГ Г°Г Г¬ГҐГІГ°Г®Гў (ГІ.ГЄ. Г®Г­ГЁ Г±Г®ГµГ°Г Г­ГїГѕГІГї)
     Left = SzLeft.Value;
     Bottom = SzBottom.Value;
     Right = SzLeft.Value + SzWidth.Value;
     Top = SzBottom.Value + SzHeight.Value;
-    NameBL = 'Полка ';
+    NameBL = 'ГЏГ®Г«ГЄГ  ';
     SH = Right - Left;
     SH1 = SH.toFixed().toString();
     BL = BeginParametricBlock(NameBL + SH1);
 
-    Fuga = 2; //зазор для дверей
-    CentrX = (SH * 0.5 + Left);//ось шкафа по оси Х
-    CenrtY = ((Top - Bottom ) * 0.5 + Bottom);//ось шкафа по оси У
+    Fuga = 2; //Г§Г Г§Г®Г° Г¤Г«Гї Г¤ГўГҐГ°ГҐГ©
+    CentrX = (SH * 0.5 + Left);//Г®Г±Гј ГёГЄГ ГґГ  ГЇГ® Г®Г±ГЁ Г•
+    CenrtY = ((Top - Bottom ) * 0.5 + Bottom);//Г®Г±Гј ГёГЄГ ГґГ  ГЇГ® Г®Г±ГЁ Г“
     Depth = DepthVal.Value;
 
     Offset = ShelfOffset.Value;
@@ -282,52 +282,52 @@ function MakeShelf()
     Y1 = Top - SideMat.Thickness;
     Y2 = Bottom + SideMat.Thickness;
     Z1 = 16;
-    ActiveMaterial.Make('ДВП Серая', 4);
-    Zadst = AddFrontPanel(LeftX - 5, Y1 + 5, RightX + 5, Y2 - 5, Z1); //установка задней стенки
+    ActiveMaterial.Make('Г„Г‚ГЏ Г‘ГҐГ°Г Гї', 4);
+    Zadst = AddFrontPanel(LeftX - 5, Y1 + 5, RightX + 5, Y2 - 5, Z1); //ГіГ±ГІГ Г­Г®ГўГЄГ  Г§Г Г¤Г­ГҐГ© Г±ГІГҐГ­ГЄГЁ
     Smech = Z1 + Zadst.Thickness;
     CZ = Zadst.Contour;
     SideMat.SetActive();
 
-    //расчет позиций петель по оси Х
+    //Г°Г Г±Г·ГҐГІ ГЇГ®Г§ГЁГ¶ГЁГ© ГЇГҐГІГҐГ«Гј ГЇГ® Г®Г±ГЁ Г•
     PetX0 = SH - Fuga * 2;
     PetX1 = PetX0 - 200;
     PetX2 = PetX1 % 32;
     PetX3 = ((PetX0 - PetX1 + PetX2) * 0.5) + Left + Fuga;
 
-    //Odds = SH.toFixed(); //ширина корпуса
-    LeftPanel = AddVertPanel(0, Bottom, Depth, Top, Left); //установка левого бока
-    RightPanel = AddVertPanel(0, Bottom, Depth, Top, RightX); //установка правого бока
-    Dno = AddHorizPanel(LeftX, 0, RightX, Depth, Bottom); // установка дна
-    Planka = AddHorizPanel(LeftX, 0, RightX, Depth, Top - SideMat.Thickness); // установка крышки сверху
+    //Odds = SH.toFixed(); //ГёГЁГ°ГЁГ­Г  ГЄГ®Г°ГЇГіГ±Г 
+    LeftPanel = AddVertPanel(0, Bottom, Depth, Top, Left); //ГіГ±ГІГ Г­Г®ГўГЄГ  Г«ГҐГўГ®ГЈГ® ГЎГ®ГЄГ 
+    RightPanel = AddVertPanel(0, Bottom, Depth, Top, RightX); //ГіГ±ГІГ Г­Г®ГўГЄГ  ГЇГ°Г ГўГ®ГЈГ® ГЎГ®ГЄГ 
+    Dno = AddHorizPanel(LeftX, 0, RightX, Depth, Bottom); // ГіГ±ГІГ Г­Г®ГўГЄГ  Г¤Г­Г 
+    Planka = AddHorizPanel(LeftX, 0, RightX, Depth, Top - SideMat.Thickness); // ГіГ±ГІГ Г­Г®ГўГЄГ  ГЄГ°Г»ГёГЄГЁ Г±ГўГҐГ°ГµГі
 
     PosY = Bottom;
     YInc = ((Top - Bottom) - SideMat.Thickness) / 2;
-    ShLeft = LeftX + Offset; //зазор для вкалдной полки слева
-    ShRight = RightX - Offset; //зазор для вкалдной полки справа
+    ShLeft = LeftX + Offset; //Г§Г Г§Г®Г° Г¤Г«Гї ГўГЄГ Г«Г¤Г­Г®Г© ГЇГ®Г«ГЄГЁ Г±Г«ГҐГўГ 
+    ShRight = RightX - Offset; //Г§Г Г§Г®Г° Г¤Г«Гї ГўГЄГ Г«Г¤Г­Г®Г© ГЇГ®Г«ГЄГЁ Г±ГЇГ°Г ГўГ 
     Prol = ((Y1 - Y2) - SideMat.Thickness * CountPol.Value) / (CountPol.Value + 1)
 
-    //задание текстур для панелей
+    //Г§Г Г¤Г Г­ГЁГҐ ГІГҐГЄГ±ГІГіГ° Г¤Г«Гї ГЇГ Г­ГҐГ«ГҐГ©
     LeftPanel.TextureOrientation = ftoVertical;
     RightPanel.TextureOrientation = ftoVertical;
     Dno.TextureOrientation = ftoHorizontal;
     Zadst.TextureOrientation = ftoVertical;
     Planka.TextureOrientation = ftoHorizontal;
 
-    //пазы на панелях
-    Cut1 = LeftPanel.AddCut('Паз 16 (4х6)');
+    //ГЇГ Г§Г» Г­Г  ГЇГ Г­ГҐГ«ГїГµ
+    Cut1 = LeftPanel.AddCut('ГЏГ Г§ 16 (4Гµ6)');
     Cut1.Trajectory.AddLine(18, 0, 18, LeftPanel.ContourHeight);
     Cut1.Contour.AddRectangle(-2, 0, 2, 6);
-    Cut2 = RightPanel.AddCut('Паз 16 (4х6)');
+    Cut2 = RightPanel.AddCut('ГЏГ Г§ 16 (4Гµ6)');
     Cut2.Trajectory.AddLine(18, 0, 18, RightPanel.ContourHeight);
     Cut2.Contour.AddRectangle(-2, RightPanel.Thickness, 2, RightPanel.Thickness - 6)
-    Cut3 = Dno.AddCut('Паз 16 (4х6)');
+    Cut3 = Dno.AddCut('ГЏГ Г§ 16 (4Гµ6)');
     Cut3.Trajectory.AddLine(0, -18, Dno.ContourWidth, -18);
     Cut3.Contour.AddRectangle(-2, Dno.Thickness - 6, 2, Dno.Thickness);
-    Cut4 = Planka.AddCut('Паз 16 (4х6)'); //паз
+    Cut4 = Planka.AddCut('ГЏГ Г§ 16 (4Гµ6)'); //ГЇГ Г§
     Cut4.Trajectory.AddLine(0, -18, Planka.ContourWidth, -18);
     Cut4.Contour.AddRectangle(-2, 0, 2, 6);
 
-    //кромка на панелях
+    //ГЄГ°Г®Г¬ГЄГ  Г­Г  ГЇГ Г­ГҐГ«ГїГµ
     LeftPanel.AddButt(ButtC, 0);
     LeftPanel.AddButt(ButtC, 1);
     LeftPanel.AddButt(ButtC, 2);
@@ -341,33 +341,33 @@ function MakeShelf()
     Planka.AddButt(ButtC, 0);
     Planka.AddButt(ButtC, 2);
 
-    //названия панелей
-    LeftPanel.Name = 'Бок левый';
-    RightPanel.Name = 'Бок правый';
-    Zadst.Name = 'Задняя стенка';
-    Planka.Name = 'Полка';
-    Dno.Name = 'Полка';
+    //Г­Г Г§ГўГ Г­ГЁГї ГЇГ Г­ГҐГ«ГҐГ©
+    LeftPanel.Name = 'ГЃГ®ГЄ Г«ГҐГўГ»Г©';
+    RightPanel.Name = 'ГЃГ®ГЄ ГЇГ°Г ГўГ»Г©';
+    Zadst.Name = 'Г‡Г Г¤Г­ГїГї Г±ГІГҐГ­ГЄГ ';
+    Planka.Name = 'ГЏГ®Г«ГЄГ ';
+    Dno.Name = 'ГЏГ®Г«ГЄГ ';
 
-    A1 = Depth - 37; //установка первого евровинта
-    A2 = A1 % 32; //остаток от глубины корпуса
-    Zag = ShelfZag.Value; //заглубление вставной полки спереди
+    A1 = Depth - 37; //ГіГ±ГІГ Г­Г®ГўГЄГ  ГЇГҐГ°ГўГ®ГЈГ® ГҐГўГ°Г®ГўГЁГ­ГІГ 
+    A2 = A1 % 32; //Г®Г±ГІГ ГІГ®ГЄ Г®ГІ ГЈГ«ГіГЎГЁГ­Г» ГЄГ®Г°ГЇГіГ±Г 
+    Zag = ShelfZag.Value; //Г§Г ГЈГ«ГіГЎГ«ГҐГ­ГЁГҐ ГўГ±ГІГ ГўГ­Г®Г© ГЇГ®Г«ГЄГЁ Г±ГЇГҐГ°ГҐГ¤ГЁ
     WidthPol = Depth - Smech - ShelfZag.Value;
 
-    //установка вставной полки
+    //ГіГ±ГІГ Г­Г®ГўГЄГ  ГўГ±ГІГ ГўГ­Г®Г© ГЇГ®Г«ГЄГЁ
     if (ShelfZag.Value < 0 || WidthPol <= 142) {
-        alert('Значение заглубления полки не корректно!\nВедите значение заново.')
+        alert('Г‡Г­Г Г·ГҐГ­ГЁГҐ Г§Г ГЈГ«ГіГЎГ«ГҐГ­ГЁГї ГЇГ®Г«ГЄГЁ Г­ГҐ ГЄГ®Г°Г°ГҐГЄГІГ­Г®!\nГ‚ГҐГ¤ГЁГІГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ Г§Г Г­Г®ГўГ®.')
     } else {
         if (PolkaVs.Value == true) {
             for (var k = 0; k < CountPol.Value; k++)
                 if (ShelfOffset.Value < 0 || ShelfOffset.Value > 5) {
-                    alert('Значение отступа полки не корректно!\nВведите значение заново.')
+                    alert('Г‡Г­Г Г·ГҐГ­ГЁГҐ Г®ГІГ±ГІГіГЇГ  ГЇГ®Г«ГЄГЁ Г­ГҐ ГЄГ®Г°Г°ГҐГЄГІГ­Г®!\nГ‚ГўГҐГ¤ГЁГІГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ Г§Г Г­Г®ГўГ®.')
                 } else {
                     if (ShelfOffset.Value > 0) {
                         Y2 += Prol;
                         SideMat.SetActive();
                         Zpol = Depth - Zag;
                         Polka = AddHorizPanel(ShLeft, Smech, ShRight, Zpol, Y2);
-                        ZPD1 = A2 + 64; //отв под полкодержатель сзади
+                        ZPD1 = A2 + 64; //Г®ГІГў ГЇГ®Г¤ ГЇГ®Г«ГЄГ®Г¤ГҐГ°Г¦Г ГІГҐГ«Гј Г±Г§Г Г¤ГЁ
                         OstFase = (Zpol - ZPD1) % 32;
                         ZPD2 = Zpol - OstFase - 32
                         Polka.TextureOrientation = ftoHorizontal;
@@ -375,8 +375,8 @@ function MakeShelf()
                         Polka.AddButt(ButtC, 1);
                         Polka.AddButt(ButtC, 2);
                         Polka.AddButt(ButtC, 3);
-                        Polka.Name = 'Полка вставная';
-                        Polkoder = Полкодержатель.Value;
+                        Polka.Name = 'ГЏГ®Г«ГЄГ  ГўГ±ГІГ ГўГ­Г Гї';
+                        Polkoder = ГЏГ®Г«ГЄГ®Г¤ГҐГ°Г¦Г ГІГҐГ«Гј.Value;
                         Polkoder.Mount(Polka, LeftPanel, ShLeft, Y2, ZPD1);
                         Polkoder.Mount(Polka, RightPanel, ShRight, Y2, ZPD1);
                         Polkoder.Mount(Polka, LeftPanel, ShLeft, Y2, ZPD2);
@@ -387,12 +387,12 @@ function MakeShelf()
                         SideMat.SetActive();
                         Zpol = Depth - Zag;
                         Polka = AddHorizPanel(ShLeft, Smech, ShRight, Zpol, Y2);
-                        ZPD1 = A2 + 64; //отв под полкодержатель сзади
+                        ZPD1 = A2 + 64; //Г®ГІГў ГЇГ®Г¤ ГЇГ®Г«ГЄГ®Г¤ГҐГ°Г¦Г ГІГҐГ«Гј Г±Г§Г Г¤ГЁ
                         OstFase = (Zpol - ZPD1) % 32;
                         ZPD2 = Zpol - OstFase - 32
                         Polka.TextureOrientation = ftoHorizontal;
                         Polka.AddButt(ButtC, 2);
-                        Polka.Name = 'Полка';
+                        Polka.Name = 'ГЏГ®Г«ГЄГ ';
                         EvrAndShkant(Polka, LeftPanel, LeftX, PosY, (A2 + 32), 32);
                         EvrAndShkant(Polka, RightPanel, RightX, PosY, (A2 + 32), 32);
                         EvrAndShkant(Polka, LeftPanel, LeftX, PosY, ZPD2, -32);
@@ -421,9 +421,9 @@ function MakeShelf()
         EvrAndShkant(Planka, RightPanel, RightX, PosY, (A2 + 32), 32);
         EvrAndShkant(Planka, LeftPanel, LeftX, PosY, (Depth - 37), -32);
         EvrAndShkant(Planka, RightPanel, RightX, PosY, (Depth - 37), -32);
-        NavesL = НавескаЛевая.Value;
+        NavesL = ГЌГ ГўГҐГ±ГЄГ Г‹ГҐГўГ Гї.Value;
         NavesL.Mount(Planka, LeftPanel, LeftX, Y1, Smech);
-        NavesR = НавескаПравая.Value;
+        NavesR = ГЌГ ГўГҐГ±ГЄГ ГЏГ°Г ГўГ Гї.Value;
         NavesR.Mount(Planka, RightPanel, RightX, Y1, Smech);
 
     Dver1();
@@ -431,8 +431,9 @@ function MakeShelf()
     BL = EndParametricBlock();
     SumFas = VesFasRam + DverVes;
     if (VesFas == undefined)
-      VesFas = Doors.NewNumber('Вес фасадов');
+      VesFas = Doors.NewNumber('Г‚ГҐГ± ГґГ Г±Г Г¤Г®Гў');
     VesFas.Value = SumFas;
     VesFas.Enabled = false;
     system.log(SumFas);
+
 }
